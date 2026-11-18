@@ -1,5 +1,5 @@
 # B2B Customer Churn & Invoice Default Risk Engine (XGBoost)
-[![CI Pipeline](https://github.com/longaresf/xgboost-advanced-classification-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/longaresf/xgboost-advanced-classification-pipeline/actions/workflows/ci.yml)
+[![CI Pipeline](https://github.com/longaresf/b2b-churn-credit-risk-xgboost/actions/workflows/ci.yml/badge.svg)](https://github.com/longaresf/b2b-churn-credit-risk-xgboost/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
 ![XGBoost](https://img.shields.io/badge/Model-XGBoost-orange.svg)
 
@@ -29,7 +29,7 @@ flowchart LR
     C --> D[Cost-Based Threshold Optimization]
     D --> E[Risk Scoring Table & SHAP Drivers]
     E --> F[Commercial Retention / Collections Action List]
-
+```
 ## 🚀 Technical Capabilities and Feature Engineering
 
 * **Cutting-Edge XGBoost Modeling:** Implementation of the `XGBClassifier` algorithm, leveraging the power of gradient transfer learning, internal regularization ($L_1$ and $L_2$), and pruning strategies to maximize predictive performance.
