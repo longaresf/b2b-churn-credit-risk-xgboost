@@ -1,7 +1,8 @@
 # B2B Customer Churn & Invoice Default Risk Engine (XGBoost)
-[![CI Pipeline](https://github.com/longaresf/b2b-churn-credit-risk-xgboost/actions/workflows/ci.yml/badge.svg)](https://github.com/longaresf/b2b-churn-credit-risk-xgboost/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
 ![XGBoost](https://img.shields.io/badge/Model-XGBoost-orange.svg)
+![Scikit-Learn](https://img.shields.io/badge/Pipeline-Scikit--Learn-F7931E.svg)
+![Explainability](https://img.shields.io/badge/XAI-SHAP-blueviolet.svg)
 
 This repository contains a high-performance **Machine Learning** ecosystem developed in **Python**, focused on using **XGBoost (Extreme Gradient Boosting)** to solve binary classification problems, analyze customer churn, and assess credit risk.
 
