@@ -1,61 +1,92 @@
-# Advanced Classification Pipeline & XGBoost Optimization Framework
+# B2B Customer Churn & Invoice Default Risk Engine (XGBoost)
+[![CI Pipeline](https://github.com/longaresf/xgboost-advanced-classification-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/longaresf/xgboost-advanced-classification-pipeline/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
+![XGBoost](https://img.shields.io/badge/Model-XGBoost-orange.svg)
 
-Este repositorio contiene un ecosistema de **Aprendizaje Automático** de alto rendimiento desarrollado en **Python**, centrado en el uso de **XGBoost (Extreme Gradient Boosting)** para resolver problemas complejos de clasificación estructurada. El proyecto destaca por la automatización de la ingeniería de características mediante pipelines y un robusto esquema de validación estadística diseñado para maximizar la capacidad predictiva y la eficiencia computacional.
+This repository contains a high-performance **Machine Learning** ecosystem developed in **Python**, focused on using **XGBoost (Extreme Gradient Boosting)** to solve binary classification problems, analyze customer churn, and assess credit risk.
 
-## 🚀 Capacidades Técnicas e Ingeniería de Características
+## Business Impact & Operational Use Case
 
-* **Modelado con XGBoost de Vanguardia:** Implementación del algoritmo `XGBClassifier`, aprovechando el poder del aprendizaje por transferencia de gradiente, regularización interna ($L_1$ y $L_2$) y manejo optimizado de datos dispersos.
-* **Pipelines de Transformación Segura:** Integración de `ColumnTransformer` para automatizar flujos aislados de preprocesamiento: imputación de valores faltantes (`SimpleImputer`), escalamiento estadístico (`StandardScaler`), codificación nominal (`OneHotEncoder`), codificación ordinal (`OrdinalEncoder`) y codificación de etiquetas objetivo (`LabelEncoder`).
-* **Estrategia de Validación Ultra-Robusta:** Implementación de técnicas de remuestreo avanzadas como **`RepeatedStratifiedKFold`** y **`RepeatedKFold`**, mitigando el desbalance de clases y reduciendo drásticamente la varianza en la evaluación del modelo.
-* **Evaluación Dual y Multidimensión:** Estructuración de un entorno métrico capaz de evaluar rendimiento tanto en escenarios de clasificación (*Accuracy*, *Precision*, *Recall*, $F_1$-Score, *ROC-AUC* vía `RocCurveDisplay`) como en análisis de desviaciones continuas (`MSE`, `MAE`, $R^2$ Score).
+### What business problem does this architecture solve?
+In B2B distribution, SaaS, and recurring-service companies, **losing an existing client or suffering late invoice payments silently erodes cash flow**. Most teams only react *after* a customer stops ordering or an invoice becomes 60+ days overdue.
 
-## 🛠️ Stack Tecnológico
+This pipeline transforms historical billing, order frequency, and payment behavior into **actionable risk probabilities**, allowing finance and commercial teams to intervene proactively.
 
-* **Lenguaje Core:** Python 3.x
-* **Estructuras de Datos:** `Pandas`, `NumPy`
-* **Visualización Estadística:** `Seaborn`, `Matplotlib`
-* **Modelado y Preprocesamiento:** `Scikit-Learn` (Sklearn)
-* **Algoritmo Core:** `XGBoost` (eXtreme Gradient Boosting)
+### Key Outcomes & Capabilities
+* **Early Warning Scoring:** Ranks accounts by probability of churn or payment delinquency before revenue is lost.
+* **Business-Driven Threshold Optimization:** Tunes classification thresholds based on financial cost asymmetry (cost of false alarm vs. cost of lost account/unpaid invoice), rather than relying on naive 0.50 cutoffs.
+* **Executive Explainability (SHAP):** Translates model predictions into human-readable risk drivers (e.g., *"Order frequency dropped 40% in the last 60 days"*), avoiding "black box" distrust from management.
+* **Production-Ready MLOps:** Modular `scikit-learn` + `XGBoost` pipelines preventing data leakage, backed by automated unit tests (`pytest`) and CI/CD.
 
-## ⚙️ Arquitectura del Pipeline y Mitigación de Errores
+---
 
-El diseño de este framework se enfocó en resolver problemas críticos de la puesta en producción de modelos predictivos:
+## Architecture Flow
 
-1. **Inmunidad al Data Leakage:** Al empaquetar de forma hermética el procesamiento (`SimpleImputer`, `StandardScaler`) junto con el estimador dentro de un `Pipeline`, los parámetros de transformación se calculan exclusivamente con el set de entrenamiento en cada pliegue de la validación cruzada, impidiendo la contaminación de datos de prueba.
-2. **Optimización Eficiente del Espacio de Parámetros:** Uso coordinado de búsquedas exhaustivas (`GridSearchCV`) y estocásticas (`RandomizedSearchCV`) para sintonizar los hiperparámetros críticos de XGBoost (como la tasa de aprendizaje `learning_rate`, profundidad máxima `max_depth`, y penalizaciones de regularización).
-3. **Análisis de Capacidad Discriminatoria:** Evaluación visual del compromiso entre la tasa de verdaderos positivos y falsos positivos mediante curvas ROC, garantizando que el modelo sea capaz de separar de manera óptima las clases de negocio estudiadas.
+```mermaid
+flowchart LR
+    A[ERP / Billing & Order History] --> B[Feature Engineering & Leakage-Free Split]
+    B --> C[XGBoost Classifier + Hyperparameter Tuning]
+    C --> D[Cost-Based Threshold Optimization]
+    D --> E[Risk Scoring Table & SHAP Drivers]
+    E --> F[Commercial Retention / Collections Action List]
 
-## 📌 Flujo de Datos del Sistema
+## 🚀 Technical Capabilities and Feature Engineering
 
-$$\text{Datos Estructurados} \longrightarrow \text{Pipeline (Imputación + Encoders + Escalamiento)} \longrightarrow \text{Repeated Stratified K-Fold} \longrightarrow \text{Ajuste Fino (Grid/Random Search)} \longrightarrow \text{Evaluación (F1 / ROC-AUC / Regresión)}$$
+* **Cutting-Edge XGBoost Modeling:** Implementation of the `XGBClassifier` algorithm, leveraging the power of gradient transfer learning, internal regularization ($L_1$ and $L_2$), and pruning strategies to maximize predictive performance.
+* **Secure Transformation Pipelines:** Integration of `ColumnTransformer` to automate isolated preprocessing workflows: missing-value imputation (`SimpleImputer`), feature scaling (`StandardScaler`), and categorical encoding (`OneHotEncoder`).
+* **Ultra-Robust Validation Strategy:** Implementation of advanced resampling techniques such as **`RepeatedStratifiedKFold`** and **`RepeatedKFold`**, mitigating class imbalance and reducing the variance of performance estimates.
+* **Dual and Multidimensional Evaluation:** Construction of a metric environment capable of evaluating performance in both classification scenarios (*Accuracy*, *Precision*, *Recall*, $F_1$-Score, *ROC-AUC*) and continuous regression scenarios (*MAE*, *RMSE*, $R^2$).
 
-## 🔧 Configuración e Instalación Local
+## 🛠️ Technology Stack
 
-Para replicar los experimentos, auditar las matrices de confusión o ejecutar el modelo en tu máquina local, sigue estos pasos:
+* **Core Language:** Python 3.x
+* **Data Structures:** `Pandas`, `NumPy`
+* **Statistical Visualization:** `Seaborn`, `Matplotlib`
+* **Modeling and Preprocessing:** `Scikit-Learn` (Sklearn)
+* **Core Algorithm:** `XGBoost` (eXtreme Gradient Boosting)
 
-1. **Clonar el repositorio:**
+## ⚙️ Pipeline Architecture and Error Mitigation
+
+The framework was designed to resolve critical challenges in deploying predictive models:
+
+1. **Data Leakage Immunity:** By tightly packaging preprocessing (`SimpleImputer`, `StandardScaler`) together with the estimator inside a `Pipeline`, all transformation parameters are learned exclusively from the training folds.
+2. **Efficient Hyperparameter Space Optimization:** Coordinated use of exhaustive searches (`GridSearchCV`) and stochastic searches (`RandomizedSearchCV`) to tune critical hyperparameters such as learning rate, tree depth, and regularization coefficients.
+3. **Discriminative Capacity Analysis:** Visual evaluation of the trade-off between the true-positive and false-positive rates using ROC curves, ensuring that the model can distinguish effectively between positive and negative classes.
+
+## 📌 System Data Flow
+
+$$\text{Structured Data} \longrightarrow \text{Pipeline (Imputation + Encoders + Scaling)} \longrightarrow \text{Repeated Stratified K-Fold} \longrightarrow \text{Fine-Tuning (Grid/Random Search)} \longrightarrow \text{Optimized XGBoost Model}$$
+
+## 🔧 Local Configuration and Installation
+
+To reproduce the experiments, audit the confusion matrices, or run the model locally, follow these steps:
+
+1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/longaresf/xgboost-advanced-classification-pipeline.git](https://github.com/longaresf/xgboost-advanced-classification-pipeline.git)
+   git clone https://github.com/longaresf/b2b-churn-credit-risk-xgboost.git
    ```
-2. Ingresar al directorio de trabajo:
-   Bash
-   cd xgboost-advanced-classification-pipeline
+2. **Enter the working directory:**
+   ```bash
+   cd b2b-churn-credit-risk-xgboost
+   ```
 
-3. Configurar el entorno virtual (Recomendado):
-   Bash
+3. **Set up the virtual environment (recommended):**
+   ```bash
    python -m venv venv
-   source venv/bin/activate  # En Windows usa: venv\Scripts\activate
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
-4. Instalar dependencias e intérpretes:
-   Bash
+4. **Install dependencies:**
+   ```bash
    pip install -r requirements.txt
+   ```
 
-5. Ejecutar el pipeline:
-   Inicia tu entorno de Jupyter Notebook o ejecuta el script principal para visualizar las curvas de aprendizaje y rendimiento de XGBoost:
+5. **Run the pipeline:**
+   Open your Jupyter Notebook environment or run the main script to visualize the XGBoost learning and performance curves:
 
-   Bash
-   python main.py  # Reemplaza por el nombre de tu archivo principal si difiere
+   ```bash
+   python main.py  # Replace with the name of your main file if different
+   ```
 
-✒️ Autor
-
-    Francisco Longares - Científico de Datos & Desarrollador de Soluciones IA - longaresf
+## ✒️ Author
+    Francisco Longares - Data Scientist & AI Solutions Developer - longaresf
